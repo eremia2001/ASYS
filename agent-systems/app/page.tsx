@@ -1,6 +1,5 @@
 'use client';
 import { motion } from 'framer-motion';
-import { FaRobot, FaCode, FaCogs } from 'react-icons/fa';
 import Navbar from './components/Navbar';
 
 export default function Home() {
