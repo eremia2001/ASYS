@@ -1,64 +1,91 @@
-import CTAButton from './CTAButton';
+import React from "react";
+import { companyInfo } from "../data/companyInfo";
+import { Mail, Phone } from "lucide-react";
+import Image from "next/image";
+import HexagonBackground from "./HexagonBackground";
+import { handleSmoothScroll } from "../utils/smoothScroll";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="py-16 px-4 bg-black border-t border-cyan-900/30">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto mb-12">
-          {/* Linke Spalte - Unternehmensinformationen */}
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-white">Agent Systems</h3>
-            <p className="text-gray-400 mb-8 leading-relaxed">
-              Wir verwandeln manuelle Prozesse in automatisierte Workflows. 
-              Mit maßgeschneiderten KI-Lösungen und intelligenter Softwareentwicklung 
-              steigern wir deine Effizienz und reduzieren Fehler.
-            </p>
-            <div className="text-gray-400">
-              <p className="mb-2">Agent Systems GmbH</p>
-              <p className="mb-2">Beispielstraße 123</p>
-              <p className="mb-2">80331 München</p>
-              <a 
-                href="https://www.agent-systems.de" 
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                www.agent-systems.de
-              </a>
-            </div>
+    <footer className="bg-gray-900 py-12 border-t border-gray-800/30">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+          {/* Logo and company name */}
+          <div className="flex items-center mb-8 md:mb-0">
+            <Image
+              src="/logo_asys.svg"
+              alt={companyInfo.shortName}
+              width={40}
+              height={40}
+              className="mr-3"
+            />
+            <span className="text-white text-xl font-medium">
+              {companyInfo.shortName}
+            </span>
           </div>
-          
-          {/* Rechte Spalte - Kontaktinformationen */}
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-white">Kontakt</h3>
-            <div className="mb-8">
-              <p className="text-gray-400 mb-2">
-                <span className="font-medium text-white">E-Mail:</span> kontakt@agent-systems.de
-              </p>
-              <p className="text-gray-400 mb-6">
-                <span className="font-medium text-white">Telefon:</span> +49 (0) 123 456789
-              </p>
-              <div>
-                <CTAButton 
-                  text="Nachricht senden" 
-                  href="mailto:kontakt@agent-systems.de" 
-                  variant="primary" 
-                  size="medium"
-                />
-              </div>
-            </div>
+
+          {/* Simple navigation mit sanftem Scrolling */}
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-8 md:mb-0">
+            <a
+              href="#leistungen"
+              className="text-gray-400 hover:text-teal-400 transition-colors"
+              onClick={(e) => handleSmoothScroll(e, 80)} // 80px Offset von der Oberseite
+            >
+              Leistungen
+            </a>
+            <a
+              href="#team"
+              className="text-gray-400 hover:text-teal-400 transition-colors"
+              onClick={(e) => handleSmoothScroll(e, 80)}
+            >
+              Team
+            </a>
+            <a
+              href="#contact"
+              className="text-gray-400 hover:text-teal-400 transition-colors"
+              onClick={(e) => handleSmoothScroll(e, 80)}
+            >
+              Kontakt
+            </a>
+            <a
+              href="/impressum"
+              className="text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              Impressum
+            </a>
+          </div>
+
+          {/* Contact buttons */}
+          <div className="flex space-x-4">
+            <a
+              href={`mailto:${companyInfo.contact.email}`}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-teal-700 text-gray-300 hover:text-white transition-all duration-300"
+              aria-label="E-Mail"
+            >
+              <Mail size={18} />
+            </a>
+            <a
+              href={`tel:${companyInfo.contact.phone}`}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-teal-700 text-gray-300 hover:text-white transition-all duration-300"
+              aria-label="Telefon"
+            >
+              <Phone size={18} />
+            </a>
           </div>
         </div>
-        
-        {/* Copyright und rechtliche Links */}
-        <div className="pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-          <p className="mb-4">© {new Date().getFullYear()} Agent Systems GmbH. Alle Rechte vorbehalten.</p>
-          <div className="flex justify-center space-x-6">
-            <a href="/impressum" className="hover:text-cyan-400 transition-colors">Impressum</a>
-            <a href="/datenschutz" className="hover:text-cyan-400 transition-colors">Datenschutz</a>
+
+        {/* Copyright bar - very minimal */}
+        <div className="pt-8 border-t border-gray-800/30 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+          <div>
+            &copy; {currentYear} {companyInfo.name}
+          </div>
+          <div className="mt-4 md:mt-0">
+            {companyInfo.address.city} • {companyInfo.contact.email}
           </div>
         </div>
       </div>
     </footer>
   );
-} 
+}
